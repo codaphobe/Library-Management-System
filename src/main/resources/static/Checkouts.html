@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Checkout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="checkout_script.js"></script>
+</head>
+<body>
+    <div id="checkout-page-identifier"></div>
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Manage Checkout</h2>
+        <div class="d-flex justify-content-center mb-4">
+            <button id="add-checkout-btn" class="btn btn-primary mx-2" onclick="showAddCheckoutForm()">Add Checkout</button>
+            <button id="update-checkout-btn" class="btn btn-info mx-2" onclick="showUpdateCheckoutForm()">Update Checkout</button>
+            <button id="delete-checkout-btn" class="btn btn-danger mx-2" onclick="showDeleteCheckoutForm()">Delete Checkout</button>
+            <button id="fetch-checkout-id-btn" class="btn btn-success mx-2" onclick="showFetchCheckoutByIdForm()">Fetch Checkout by ID</button>
+            <button id="fetch-all-checkouts-btn" class="btn btn-secondary mx-2" onclick="showFetchAllCheckouts()">Fetch All Checkouts</button>
+        </div>
+
+        <div id="checkout-form-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+                <h3>Add Checkout</h3>
+            </div>
+            <div class="card-body">
+            <form id="checkout-form">
+                <div class="my-3">
+                    <label for="book-id" class="form-label">Book ID</label>
+                    <input type="number" class="form-control" id="book-id" required>
+                </div>
+                <div class="my-3">
+                    <label for="student-id" class="form-label">Student ID </label>
+                    <input type="number" class="form-control" id="student-id" required>
+                </div>
+                <div class="my-3">
+                    <label for="checkout-date" class="form-label">Checkout Date</label>
+                    <input type="date" class="form-control" id="checkout-date" required>
+                </div>
+				<div class="my-3">
+                    <label for="return-date" class="form-label">Return Date</label>
+                    <input type="date" class="form-control" id="return-date" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Checkout</button>
+            </form>
+        </div>
+        </div>
+
+        <div id="update-checkout-form-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+            <h3>Update Checkout</h3>
+        </div>
+        <div class="card-body">
+            <form id="update-checkout-form">
+                <div class="my-3">
+                    <label for="update-checkout-id" class="form-label">Checkout ID</label>
+                    <input type="text" class="form-control" id="update-checkout-id" required>
+                </div>
+				<div class="my-3">
+                    <label for="update-book-id" class="form-label">Book ID</label>
+                    <input type="number" class="form-control" id="update-book-id" required>
+                </div>
+                <div class="my-3">
+                    <label for="update-student-id" class="form-label">Student ID </label>
+                    <input type="number" class="form-control" id="update-student-id" required>
+                </div>
+                <div class="my-3">
+                    <label for="update-checkout-date" class="form-label">Checkout Date</label>
+                    <input type="date" class="form-control" id="update-checkout-date" required>
+                </div>
+				<div class="my-3">
+                    <label for="update-return-date" class="form-label">Return Date</label>
+                    <input type="date" class="form-control" id="update-return-date" required>
+                </div>
+                <button type="submit" class="btn btn-info">Update</button>
+            </form>
+        </div>
+        </div>
+
+        <div id="delete-checkout-form-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+                <h3>Delete Checkout</h3>
+            </div>
+            <div class="card-body">
+                <form id="delete-checkout-form">
+                    <div class="mb-3">
+                        <label for="delete-checkout-id" class="form-label">Checkout ID</label>
+                        <input type="text" class="form-control" id="delete-checkout-id" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="fetch-checkout-id-form-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+                <h3>Fetch Checkout by ID</h3>
+            </div>
+            <div class="card-body">
+                <form id="fetch-checkout-id-form">
+                    <div class="mb-3">
+                        <label for="fetch-checkout-id" class="form-label">Checkout ID</label>
+                        <input type="text" class="form-control" id="fetch-checkout-id" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Fetch</button>
+                </form>
+            </div>
+			<div id="result"></div>
+        </div>
+
+        <div id="fetch-all-checkouts-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+                <h3>All Checkouts</h3>
+            </div>
+            <div class="card-body">
+                <div id="checkouts-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

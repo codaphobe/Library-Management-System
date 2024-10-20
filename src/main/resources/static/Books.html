@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Books</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="book_script.js"></script>
+</head>
+<body>
+    <div id="books-page-identifier"></div>
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Manage Books</h2>
+        <div class="d-flex justify-content-center mb-4">
+            <button id="add-book-btn" class="btn btn-primary mx-2" onclick="showAddBookForm()">Add Book</button>
+            <button id="update-book-btn" class="btn btn-info mx-2" onclick="showUpdateBookForm()">Update Book</button>
+            <button id="delete-book-btn" class="btn btn-danger mx-2" onclick="showDeleteBookForm()">Delete Book</button>
+            <button id="fetch-book-title-btn" class="btn btn-success mx-2" onclick="showFetchBookByTitleForm()">Fetch Book by Id</button>
+            <button id="fetch-all-books-btn" class="btn btn-secondary mx-2" onclick="showFetchAllBooks()">Fetch All Books</button>
+        </div>
+
+        <div id="book-form-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+                <h3>Add Book</h3>
+            </div>
+            <form id="book-form">
+                <div class="my-3">
+                    <label for="book-title"  class="form-label">Book Title</label>
+                    <input type="text" name="book_title" class="form-control" id="book-title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="book-author" class="form-label">Book Author Id</label>
+                    <input type="number" class="form-control" id="book-author" required>
+                </div>
+				<div class="mb-3">
+                    <label for="book-genre" class="form-label">Book Genre</label>
+                    <input type="text" name="genre" class="form-control" id="book-genre" required>
+                </div>
+				<div class="mb-3">
+                    <label for="book-aval" class="form-label">Book Availability (1:true || 0: False)</label>
+                    <input type="number" name="book-aval" class="form-control" id="book-aval" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <div id="update-book-form-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+                <h3>Update Book</h3>
+            </div>
+            <form id="update-book-form">
+                <div class="my-3">
+                    <label for="update-book-id" class="form-label">Book ID</label>
+                    <input type="number" class="form-control" id="update-book-id" required>
+                </div>
+				<div class="my-3">
+                    <label for="update-book-title"  class="form-label">Book Title</label>
+                    <input type="text" name="book_title" class="form-control" id="update-book-title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="update-book-author" class="form-label">Book Author Id</label>
+                    <input type="number" class="form-control" id="update-book-author" required>
+                </div>
+				<div class="mb-3">
+                    <label for="update-book-genre" class="form-label">Book Genre</label>
+                    <input type="text" name="genre" class="form-control" id="update-book-genre" required>
+                </div>
+				<div class="mb-3">
+                    <label for="update-book-aval" class="form-label">Book Availability (1:true || 0: False)</label>
+                    <input type="number" name="book-aval" class="form-control" id="update-book-aval" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+
+        <div id="delete-book-form-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+                <h3>Delete Book</h3>
+            </div>
+            <form id="delete-book-form">
+                <div class="mb-3">
+                    <label for="delete-book-id" class="form-label">Book ID</label>
+                    <input type="text" class="form-control" id="delete-book-id" required>
+                </div>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+
+        <div id="fetch-book-title-form-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+                <h3>Fetch Book by Id</h3>
+            </div>
+            <form id="fetch-book-title-form">
+                <div class="my-3">
+                    <label for="fetch-book-id" class="form-label">Book Id</label>
+                    <input type="text" class="form-control" id="fetch-book-id" required>
+                </div>
+                <button type="submit" class="btn btn-success">Fetch</button>
+            </form>
+			<div id="result"></div>
+        </div>
+
+        <div id="fetch-all-books-container" class="card p-3" style="display:none;">
+            <div class="card-header">
+                <h3>All Books</h3>
+            </div>
+            <div class="card-body">
+                <div id="book-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
