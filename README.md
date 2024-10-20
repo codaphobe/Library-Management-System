@@ -10,6 +10,6 @@ This is a project made in my 3rd year of college project to learn Spring Boot us
 
 ## Technology Stack
 
-- Java Spring Boot 
+- Java Spring & Spring Boot 
 - SQL
 - HTML, CSS, JavaScript
